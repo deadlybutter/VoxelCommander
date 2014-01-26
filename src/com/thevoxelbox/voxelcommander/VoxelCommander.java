@@ -58,28 +58,18 @@ public class VoxelCommander extends JavaPlugin implements Listener {
             return;
         }
         if(event.hasItem()){
-            getServer().broadcastMessage("1");
             if(event.getItem().getType() == Material.BLAZE_ROD){
-                getServer().broadcastMessage("2");
                 if(clickedBlock.getType() == Material.COMMAND){
-                    getServer().broadcastMessage("3");
                     if(player.hasPermission(USE_PERMISSION)){
-                        getServer().broadcastMessage("4");
                         String command = playerCommands.get(player.getName());
                         if(command == null){
-                            getServer().broadcastMessage("4.5");
                             player.sendMessage("You need to set a command with /vcom [command here]");
                             event.setCancelled(true);
                             return;
                         }
-                        getServer().broadcastMessage("5");
                         CommandBlock commandBlock = (CommandBlock) clickedBlock.getState();
-                        getServer().broadcastMessage("6");
                         commandBlock.setCommand("/" + command);
-                        commandBlock.update();
-                        getServer().broadcastMessage("7");
                         player.sendMessage("Command set to " + command);
-                        getServer().broadcastMessage("annnd it equals " + commandBlock.getCommand());
                         event.setCancelled(true);
                     }
                 }
