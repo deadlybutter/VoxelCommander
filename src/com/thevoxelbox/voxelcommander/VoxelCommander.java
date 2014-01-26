@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ public class VoxelCommander extends JavaPlugin implements Listener {
     @Override
     public void onEnable(){
         getServer().getPluginManager().registerEvents(this, this);
+        loadBannedCommands();
     }
 
     @Override
@@ -38,7 +40,7 @@ public class VoxelCommander extends JavaPlugin implements Listener {
             for (String arg : args) {
                 command += arg + " ";
             }
-            if(bannedCommands.contains(command)){
+            if(bannedCommands.contains(args[0])){
                 sender.sendMessage("That command is not allowed, please contact an administrator if you need it.");
                 return true;
             }
@@ -71,6 +73,44 @@ public class VoxelCommander extends JavaPlugin implements Listener {
                         commandBlock.setCommand("/" + command);
                         player.sendMessage("Command set to " + command);
                         event.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
+
+    private void loadBannedCommands(){
+        File dataFolder = getDataFolder();
+        if(!dataFolder.exists()){
+            dataFolder.mkdir();
+        }
+        File commandFile = new File(getDataFolder(), "banned_commands.txt");
+        if(!commandFile.exists()){
+            try{
+                commandFile.createNewFile();
+            }
+            catch(IOException exception){
+                exception.printStackTrace();
+            }
+        }
+        else{
+            BufferedReader br = null;
+            try{
+                String currentLine;
+                br = new BufferedReader(new FileReader(commandFile));
+                while((currentLine = br.readLine()) != null){
+                    bannedCommands.add(currentLine);
+                }
+            }
+            catch(IOException exception){
+                exception.printStackTrace();
+            }
+            finally {
+                if(br != null){
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
