@@ -1,0 +1,7 @@
+name: VoxelCommander
+main: com.thevoxelbox.voxelcommander.VoxelCommander
+version: 1.0
+authors: [thedeadlybutter]
+commands:
+  vcom:
+    description: Sets the command a player gives command blocks
