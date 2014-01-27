@@ -38,13 +38,10 @@ public class VoxelCommanderCommandExecutor implements CommandExecutor
             if (options.commands != null)
             {
                 boolean isCorrect = true;
-                for (String currentCommand : options.commands)
+                if (options.commands.length > 0 && plugin.getBannedCommands().contains(options.commands[0].toLowerCase()))
                 {
-                    if (plugin.getBannedCommands().contains(currentCommand.toLowerCase()))
-                    {
-                        playerMessages.println("\"" + currentCommand + "\" is not allowed for usage!");
-                        isCorrect = false;
-                    }
+                    playerMessages.println("\"" + options.commands[0] + "\" is not allowed for usage!");
+                    isCorrect = false;
                 }
 
                 if (isCorrect)
@@ -65,6 +62,6 @@ public class VoxelCommanderCommandExecutor implements CommandExecutor
     private class VoxelCommanderCommandOptions
     {
         @Argument(usage = "Command to be set using the VoxelCommander tool.", metaVar = "<command>", multiValued = true)
-        String[] commands = {};
+        String[] commands = { };
     }
 }
