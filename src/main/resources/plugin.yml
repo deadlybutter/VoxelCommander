@@ -1,0 +1,15 @@
+name: ${project.artifactId}
+main: com.thevoxelbox.voxelcommander.VoxelCommander
+version: ${project.build.version}
+website: ${project.url}
+authors: [thedeadlybutter, MikeMatrix]
+description: ${project.description}
+commands:
+  voxelcommander:
+    aliases: [voxelcom, vcom, vcommander]
+    description: Sets the command a player gives command blocks.
+    permission: voxelcommander.use
+    usage: Use /<command> --help to get help for that command.
+permissions:
+  voxelcommander.use:
+    default: op
